@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('grupo_promocoes', function (Blueprint $table) {
             $table->id();
+
+            $table->string('nome');
+            $table->string('slug')->unique();
+            $table->text('descricao');
+            $table->foreignId('promocao_id')->constrained('promocoes')->onDelete('cascade');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

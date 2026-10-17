@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('jogo_id')->constrained('jogos')->onDelete('cascade');
-            $table->enum('tipo', ['desconto', 'preco_fixo']);
+            $table->foreignId('grupo_promocao_id')->constrained('grupo_promocoes')->onDelete('cascade');
+            $table->enum('tipo', ['percentual', 'preco_fixo']);
             $table->integer('percentual')->nullable();
             $table->timestamp('data_fim');
             $table->decimal('valor', 7, 2);
