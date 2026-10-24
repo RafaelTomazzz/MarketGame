@@ -55,6 +55,42 @@ a:focus-visible {
     --bs-btn-hover-border-color: var(--mg-accent-orange);
 }
 
+.mg-search-form {
+    width: min(100%, 400px);
+    font-size: 1rem;
+}
+
+.mg-search-form .form-control,
+.mg-search-form .btn {
+    font-size: inherit;
+}
+
+.mg-header-icon {
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+    --bs-btn-color: #35304e;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-color: #fff;
+}
+
+.mg-header-icon .bi {
+    font-size: 1.125rem;
+    display: block;
+    line-height: 1;
+}
+
+.mg-header-icon:hover,
+.mg-header-icon:focus-visible,
+.mg-header-icon:active {
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-color: #fff;
+}
+
 .mg-auth-page {
     background: var(--mg-gradient-auth);
 }
@@ -76,4 +112,39 @@ a:focus-visible {
     max-height: calc(100vh - 3rem);
     max-height: calc(100dvh - 3rem);
     overflow-y: auto;
+}
+
+.mg-featured-carousel {
+    isolation: isolate;
+}
+
+.mg-featured-slide {
+    min-height: 25rem;
+    background: var(--mg-gradient-card);
+}
+
+.mg-featured-image {
+    object-fit: cover;
+}
+
+.mg-featured-scrim {
+    background: linear-gradient(90deg, rgb(23 21 33 / 96%) 0%, rgb(23 21 33 / 78%) 48%, rgb(23 21 33 / 12%) 100%),
+        linear-gradient(0deg, rgb(23 21 33 / 45%) 0%, transparent 55%);
+}
+
+.mg-featured-content {
+    min-height: 25rem;
+    padding-bottom: 4rem !important;
+}
+
+@media (max-width: 575.98px) {
+    .mg-featured-slide,
+    .mg-featured-content {
+        min-height: 22rem;
+    }
+
+    .mg-featured-scrim {
+        background: linear-gradient(90deg, rgb(23 21 33 / 94%) 0%, rgb(23 21 33 / 68%) 100%),
+            linear-gradient(0deg, rgb(23 21 33 / 60%) 0%, transparent 75%);
+    }
 }

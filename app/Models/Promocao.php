@@ -11,6 +11,8 @@ class Promocao extends Model
 {
     use SoftDeletes;
 
+    protected $table = 'promocoes';
+
     protected $fillable = [
         'tipo',
         'percentual',
