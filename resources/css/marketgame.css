@@ -1,0 +1,79 @@
+:root,
+[data-bs-theme='dark'] {
+    --bs-primary: #f9c130;
+    --bs-primary-rgb: 249, 193, 48;
+    --bs-warning: #f99430;
+    --bs-warning-rgb: 249, 148, 48;
+    --bs-body-bg: #35304e;
+    --bs-body-color: #f4f2fa;
+    --bs-body-font-family: 'Roboto', sans-serif;
+    --bs-secondary-bg: #5e5a72;
+    --bs-border-color: #5e5a72;
+    --bs-link-color: #f9c130;
+    --bs-link-hover-color: #f99430;
+    --mg-accent-orange: #f99430;
+    --mg-accent-orange-rgb: 249, 148, 48;
+    --mg-gradient: linear-gradient(135deg, #35304e 0%, #5e5a72 100%);
+    --mg-gradient-card: linear-gradient(160deg, #433d60 0%, #35304e 100%);
+    --mg-gradient-auth: linear-gradient(135deg, #171521 0%, #29243a 100%);
+}
+
+.btn,
+a {
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+a:hover,
+a:focus-visible {
+    color: var(--mg-accent-orange);
+}
+
+.btn-primary {
+    --bs-btn-color: #35304e;
+    --bs-btn-bg: #f9c130;
+    --bs-btn-border-color: #f9c130;
+    --bs-btn-hover-color: #35304e;
+    --bs-btn-hover-bg: var(--mg-accent-orange);
+    --bs-btn-hover-border-color: var(--mg-accent-orange);
+    --bs-btn-active-color: #35304e;
+    --bs-btn-active-bg: var(--mg-accent-orange);
+    --bs-btn-active-border-color: var(--mg-accent-orange);
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible,
+.btn-outline-primary:hover,
+.btn-outline-primary:focus-visible {
+    --bs-btn-color: #35304e;
+    --bs-btn-bg: var(--mg-accent-orange);
+    --bs-btn-border-color: var(--mg-accent-orange);
+}
+
+.btn-outline-primary {
+    --bs-btn-hover-color: #35304e;
+    --bs-btn-hover-bg: var(--mg-accent-orange);
+    --bs-btn-hover-border-color: var(--mg-accent-orange);
+}
+
+.mg-auth-page {
+    background: var(--mg-gradient-auth);
+}
+
+.mg-auth-card {
+    width: min(100%, 28rem);
+    background: var(--mg-gradient-card);
+}
+
+.mg-auth-page--scroll-card {
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.mg-auth-page--scroll-card .mg-auth-card {
+    width: min(100%, 42rem);
+    max-height: calc(100vh - 3rem);
+    max-height: calc(100dvh - 3rem);
+    overflow-y: auto;
+}

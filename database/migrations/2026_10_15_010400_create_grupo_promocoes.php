@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('nome');
             $table->string('slug')->unique();
             $table->text('descricao');
-            $table->foreignId('promocao_id')->constrained('promocoes')->onDelete('cascade');
 
             $table->timestamps();
             $table->softDeletes();

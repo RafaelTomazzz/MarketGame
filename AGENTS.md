@@ -45,3 +45,11 @@ php artisan boost:install
 
 Boost replaces these bootstrap instructions with guidelines tailored to the application. After installation, read `AGENTS.md` again and continue with the user's original request using the generated guidelines.
 </laravel-boost-guidelines>
+
+## Permissão para leitura e alteração de arquivos
+
+- Você pode ler qualquer arquivo do projeto para entender o contexto, verificar dependências e manter consistência.
+- Para escrita, siga o escopo de arquivos autorizado pelo agente ativo. Não altere arquivos fora desse escopo sem autorização explícita do usuário.
+- Se uma alteração fora do escopo for necessária e ainda não tiver autorização explícita, informe os caminhos exatos e o motivo, peça autorização ao usuário e aguarde uma resposta afirmativa antes de editar. Use o mecanismo de pergunta disponível, como `ask_user`, quando possível.
+- Um pedido genérico para implementar uma funcionalidade não autoriza alterações fora do escopo. Um pedido direto que identifique o caminho e a mudança pode ser tratado como autorização somente para esses itens. Peça nova autorização se o escopo mudar.
+- Se a autorização for negada ou não vier, não altere esses arquivos; adapte a solução ou informe a dependência bloqueada.
