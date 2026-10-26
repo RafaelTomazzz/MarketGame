@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
         $cpfs = [];
         $ddds = [11, 21, 31, 41, 51, 61, 71, 81, 85, 62];
 
-        for ($index = 1; $index <= 50; $index++) {
+        for ($index = 1; $index <= 100; $index++) {
             $nome = $index === 1
                 ? 'Conta Demo MarketGame'
                 : $faker->name();
