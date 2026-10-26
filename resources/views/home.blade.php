@@ -4,29 +4,31 @@
 
 @section('content')
     <div class="container py-4 py-lg-5">
+        @php($jogosEmPromocaoNoCarrossel = $jogosEmPromocao->take(5))
+
         <section aria-labelledby="destaques-heading" class="mb-5">
             <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-3">
                 <div>
-                    <p class="text-primary text-uppercase fw-semibold small mb-1">Escolhas para sua próxima aventura</p>
-                    <h1 id="destaques-heading" class="h2 fw-bold mb-0">Jogos em destaque</h1>
+                    <p class="text-primary text-uppercase fw-semibold small mb-1">Oportunidades por tempo limitado</p>
+                    <h1 id="destaques-heading" class="h2 fw-bold mb-0">Jogos em promoção</h1>
                 </div>
-                <span class="text-body-secondary small">Novos favoritos esperam por você</span>
+                <span class="text-body-secondary small">Ofertas selecionadas para você</span>
             </div>
 
-            @if ($jogosEmDestaque->isNotEmpty())
+            @if ($jogosEmPromocaoNoCarrossel->isNotEmpty())
                 <div id="featured-games" class="carousel slide carousel-fade mg-featured-carousel"
                     data-bs-ride="carousel" data-bs-interval="6500">
                     <div class="carousel-indicators">
-                        @foreach ($jogosEmDestaque as $jogo)
+                        @foreach ($jogosEmPromocaoNoCarrossel as $jogo)
                             <button type="button" data-bs-target="#featured-games"
                                 data-bs-slide-to="{{ $loop->index }}" @if ($loop->first) class="active"
                                 aria-current="true" @endif
-                                aria-label="Exibir destaque {{ $loop->iteration }}"></button>
+                                aria-label="Exibir promoção {{ $loop->iteration }}"></button>
                         @endforeach
                     </div>
 
                     <div class="carousel-inner rounded-4 overflow-hidden shadow">
-                        @foreach ($jogosEmDestaque as $jogo)
+                        @foreach ($jogosEmPromocaoNoCarrossel as $jogo)
                             <article class="carousel-item {{ $loop->first ? 'active' : '' }}">
                                 <div class="mg-featured-slide position-relative overflow-hidden">
                                     @if ($jogo->imagem)
@@ -37,7 +39,7 @@
 
                                     <div class="mg-featured-content position-relative d-flex align-items-end h-100 p-4 p-lg-5">
                                         <div class="col-lg-7">
-                                            <span class="badge text-bg-primary text-dark mb-3">Destaque MarketGame</span>
+                                            <span class="badge text-bg-danger mb-3">Em promoção</span>
                                             <h2 class="display-5 fw-bold mb-2">{{ $jogo->nome }}</h2>
                                             <p class="text-white-50 mb-3">{{ $jogo->descricao }}</p>
 
@@ -65,7 +67,7 @@
                         @endforeach
                     </div>
 
-                    @if ($jogosEmDestaque->count() > 1)
+                    @if ($jogosEmPromocaoNoCarrossel->count() > 1)
                         <button class="carousel-control-prev" type="button" data-bs-target="#featured-games"
                             data-bs-slide="prev" aria-label="Destaque anterior">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -78,7 +80,7 @@
                 </div>
             @else
                 <div class="rounded-4 border border-secondary bg-dark p-5 text-center text-body-secondary">
-                    Novos jogos em destaque chegarão em breve.
+                    Não há promoções ativas no momento. Volte em breve para conferir novas ofertas.
                 </div>
             @endif
         </section>
@@ -140,14 +142,24 @@
                 </div>
             </div>
 
-            @if ($jogosEmPromocao->isNotEmpty())
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3">
-                    @foreach ($jogosEmPromocao as $jogo)
-                        <div class="col">
-                            <x-game-card :jogo="$jogo" />
+            @if ($gruposEmPromocao->isNotEmpty())
+                @foreach ($gruposEmPromocao as $grupo)
+                    <div class="mb-4">
+                        <h3 id="grupo-promocao-{{ $grupo->id }}" class="h4 fw-semibold mb-3">
+                            {{ $grupo->nome }}
+                        </h3>
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3"
+                            aria-labelledby="grupo-promocao-{{ $grupo->id }}">
+                            @foreach ($grupo->promocoes as $promocao)
+                                @if ($promocao->jogo)
+                                    <div class="col">
+                                        <x-game-card :jogo="$promocao->jogo" />
+                                    </div>
+                                @endif
+                            @endforeach
                         </div>
-                    @endforeach
-                </div>
+                    </div>
+                @endforeach
             @else
                 <div class="rounded-4 border border-secondary bg-dark p-4 text-center text-body-secondary">
                     Não há promoções ativas no momento. Volte em breve para conferir novas ofertas.

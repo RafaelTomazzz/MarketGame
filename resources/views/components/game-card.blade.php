@@ -48,6 +48,20 @@
                     R$ {{ number_format((float) $jogo->preco, 2, ',', '.') }}
                 </p>
             @endif
+
+            <form action="{{ route('cart.add', $jogo) }}" method="POST" class="mt-3">
+                @csrf
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-cart-plus me-2" aria-hidden="true"></i>
+                    Adicionar ao carrinho
+                </button>
+            </form>
+
+            @if ((string) session('cart_added_game_id') === (string) $jogo->id)
+                <p class="text-success small mt-2 mb-0" role="status" aria-live="polite">
+                    {{ session('success') }}
+                </p>
+            @endif
         </div>
     </div>
 </article>

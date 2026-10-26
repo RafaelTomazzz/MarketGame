@@ -36,10 +36,9 @@ class Jogo extends Model
             ->withTimestamps();
     }
 
-    public function carrinhos(): BelongsToMany
+    public function usuariosComJogoNoCarrinho(): BelongsToMany
     {
-        return $this->belongsToMany(Carrinho::class, 'item_carrinhos', 'jogo_id', 'carrinho_id')
-            ->withPivot('quantidade')
+        return $this->belongsToMany(User::class, 'jogo_user', 'jogo_id', 'user_id')
             ->withTimestamps();
     }
 

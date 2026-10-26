@@ -15,6 +15,7 @@ class Pedido extends Model
     protected $fillable = [
         'status',
         'total',
+        'frete',
         'user_id',
     ];
 
@@ -22,6 +23,7 @@ class Pedido extends Model
     {
         return [
             'total' => 'decimal:2',
+            'frete' => 'decimal:2',
         ];
     }
 
@@ -33,7 +35,7 @@ class Pedido extends Model
     public function jogos(): BelongsToMany
     {
         return $this->belongsToMany(Jogo::class, 'pedido_jogos', 'pedido_id', 'jogo_id')
-            ->withPivot('quantidade')
+            ->withPivot(['quantidade', 'preco_original', 'preco_unitario'])
             ->withTimestamps();
     }
 

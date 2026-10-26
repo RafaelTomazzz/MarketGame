@@ -91,6 +91,16 @@ a:focus-visible {
     --bs-btn-active-color: #fff;
 }
 
+.mg-orders-modal-content {
+    height: 80vh;
+    max-height: calc(100vh - 2rem);
+    max-height: calc(100dvh - 2rem);
+}
+
+.mg-orders-modal-content .modal-body {
+    overflow-y: auto;
+}
+
 .mg-auth-page {
     background: var(--mg-gradient-auth);
 }

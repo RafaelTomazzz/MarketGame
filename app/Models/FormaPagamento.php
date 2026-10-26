@@ -13,8 +13,25 @@ class FormaPagamento extends Model
 
     protected $fillable = [
         'nome',
+        'tipo',
+        'titular',
+        'bandeira',
+        'ultimos_digitos',
+        'validade',
         'user_id',
     ];
+
+    protected $hidden = [
+        'titular',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'titular' => 'encrypted',
+            'validade' => 'date:Y-m',
+        ];
+    }
 
     public function usuario(): BelongsTo
     {

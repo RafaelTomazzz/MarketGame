@@ -10,6 +10,8 @@ class GrupoPromocao extends Model
 {
     use SoftDeletes;
 
+    protected $table = 'grupo_promocoes';
+
     protected $fillable = [
         'nome',
         'slug',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
+use App\Models\GrupoPromocao;
 use App\Models\Jogo;
 use Illuminate\Contracts\View\View;
 
@@ -21,7 +22,7 @@ class HomeController extends Controller
             ->orderBy('nome')
             ->get();
 
-        $slugCategoria = request()->query('categoria');
+        $slugCategoria = request()->query('categoria', 'acao');
         $categoriaSelecionada = is_string($slugCategoria)
             ? $categorias->firstWhere('slug', $slugCategoria)
             : null;
@@ -44,7 +45,23 @@ class HomeController extends Controller
         $jogosEmPromocao = (clone $jogos)
             ->whereHas('promocao', $promocaoVigente)
             ->inRandomOrder()
-            ->limit(8)
+            ->limit(5)
+            ->get();
+
+        $gruposEmPromocao = GrupoPromocao::query()
+            ->whereHas('promocoes', $promocaoVigente)
+            ->with([
+                'promocoes' => fn ($query) => $query
+                    ->where('data_fim', '>=', now())
+                    ->orderBy('id')
+                    ->with([
+                        'jogo' => fn ($query) => $query->with([
+                            'categorias',
+                            'promocao' => $promocaoVigente,
+                        ]),
+                    ]),
+            ])
+            ->orderBy('nome')
             ->get();
 
         return view('home', [
@@ -53,6 +70,7 @@ class HomeController extends Controller
             'jogosDaCategoria' => $jogosDaCategoria,
             'jogosEmDestaque' => $jogosEmDestaque,
             'jogosEmPromocao' => $jogosEmPromocao,
+            'gruposEmPromocao' => $gruposEmPromocao,
         ]);
     }
 }

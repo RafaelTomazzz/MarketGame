@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -47,5 +48,11 @@ class User extends Authenticatable
     public function formasPagamento(): HasMany
     {
         return $this->hasMany(FormaPagamento::class);
+    }
+
+    public function jogosNoCarrinho(): BelongsToMany
+    {
+        return $this->belongsToMany(Jogo::class, 'jogo_user', 'user_id', 'jogo_id')
+            ->withTimestamps();
     }
 }
