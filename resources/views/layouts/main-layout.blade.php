@@ -46,7 +46,10 @@
                                 data-bs-target="#user-orders-modal">
                                 Meus pedidos
                             </button>
-                            <button class="dropdown-item" type="button">Logout</button>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button class="dropdown-item" type="submit">Sair</button>
+                            </form>
                         </div>
                     </div>
                 @else

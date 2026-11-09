@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class RegisterUserTest extends TestCase
@@ -80,6 +81,57 @@ class RegisterUserTest extends TestCase
         $this->assertDatabaseCount('enderecos', 0);
     }
 
+    #[DataProvider('invalidPasswords')]
+    public function test_registration_rejects_passwords_that_do_not_meet_requirements(
+        string $password,
+        string $message,
+    ): void {
+        $dados = $this->dadosCadastro([
+            'password' => $password,
+            'password_confirmation' => $password,
+        ]);
+
+        $response = $this->from(route('cadastro'))->post(route('cadastro.store'), $dados);
+
+        $response->assertRedirect(route('cadastro'));
+        $response->assertSessionHasErrors(['password' => $message]);
+        $this->assertDatabaseCount('users', 0);
+        $this->assertDatabaseCount('enderecos', 0);
+    }
+
+    public static function invalidPasswords(): array
+    {
+        return [
+            'fewer than eight characters' => [
+                'Curta1A',
+                'A senha deve ter pelo menos 8 caracteres.',
+            ],
+            'without uppercase letter' => [
+                'senhasegura1',
+                'A senha deve conter pelo menos uma letra maiúscula e uma minúscula.',
+            ],
+            'without lowercase letter' => [
+                'SENHASEGURA1',
+                'A senha deve conter pelo menos uma letra maiúscula e uma minúscula.',
+            ],
+            'without number' => [
+                'SenhaSegura',
+                'A senha deve conter pelo menos um número.',
+            ],
+        ];
+    }
+
+    public function test_registration_form_displays_password_requirements(): void
+    {
+        $response = $this->get(route('cadastro'));
+
+        $response->assertOk();
+        $response->assertSeeText(
+            'A senha deve ter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula e um número.',
+        );
+        $response->assertSee('minlength="8"', false);
+    }
+
     public function test_login_page_displays_registration_success_message(): void
     {
         $response = $this->withSession([
@@ -101,8 +153,8 @@ class RegisterUserTest extends TestCase
             'cpf' => '123.456.789-09',
             'telefone' => '(11) 98765-4321',
             'email' => 'teste@example.test',
-            'password' => 'senha-segura',
-            'password_confirmation' => 'senha-segura',
+            'password' => 'SenhaSegura1',
+            'password_confirmation' => 'SenhaSegura1',
             'cep' => '01234-567',
             'uf' => 'sp',
             'cidade' => 'São Paulo',

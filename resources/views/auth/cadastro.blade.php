@@ -224,8 +224,13 @@
                 type="password"
                 class="form-control @error('password') is-invalid @enderror"
                 autocomplete="new-password"
+                minlength="8"
+                aria-describedby="password-requirements"
                 required
             >
+            <div id="password-requirements" class="form-text">
+                A senha deve ter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula e um número.
+            </div>
             @error('password')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -29,6 +30,13 @@ class AuthService
         } catch (Throwable $exception) {
             throw new RuntimeException('Não foi possível realizar o login.', previous: $exception);
         }
+    }
+
+    public function logout(Request $request): void
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
     }
 
     /**

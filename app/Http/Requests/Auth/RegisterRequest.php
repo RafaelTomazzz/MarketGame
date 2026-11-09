@@ -7,6 +7,7 @@ use Closure;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 
 class RegisterRequest extends FormRequest
@@ -74,7 +75,12 @@ class RegisterRequest extends FormRequest
             ],
             'telefone' => ['required', 'string', 'regex:/^(?:[1-9]\d[2-5]\d{7}|[1-9]\d9\d{8})$/'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => [
+                'required',
+                'string',
+                'confirmed',
+                Password::min(8)->mixedCase()->numbers(),
+            ],
             'password_confirmation' => ['required', 'string'],
             'cep' => ['required', 'string', 'digits:8'],
             'uf' => ['required', 'string', 'size:2', 'regex:/^[A-Z]{2}$/'],
@@ -83,6 +89,18 @@ class RegisterRequest extends FormRequest
             'rua' => ['required', 'string', 'max:255'],
             'numero' => ['required', 'string', 'max:255'],
             'complemento' => ['nullable', 'string', 'max:255'],
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'password.min' => 'A senha deve ter pelo menos 8 caracteres.',
+            'password.mixed' => 'A senha deve conter pelo menos uma letra maiúscula e uma minúscula.',
+            'password.numbers' => 'A senha deve conter pelo menos um número.',
         ];
     }
 

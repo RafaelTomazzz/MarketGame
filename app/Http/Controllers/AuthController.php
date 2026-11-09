@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\RegisterRequest;
 use App\Services\AuthService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Throwable;
 
 class AuthController extends Controller
@@ -40,6 +41,13 @@ class AuthController extends Controller
                 ->withErrors(['login' => 'Não foi possível realizar o login. Tente novamente.'])
                 ->withInput($request->safe()->only('email'));
         }
+    }
+
+    public function logout(Request $request): RedirectResponse
+    {
+        $this->authService->logout($request);
+
+        return redirect()->route('home');
     }
 
     public function cadastrar(RegisterRequest $request): RedirectResponse
